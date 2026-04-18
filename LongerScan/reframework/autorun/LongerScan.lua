@@ -4,8 +4,7 @@ local sourceweb = "Nexus"
 local version = "v1.0"
 local configfile = modname..".json"
 local _config={
-    {name="enable",type="bool",default=true},
-    {name="time",type="int",default=1200,min=1,max=36000}, -- seconds, 10 by game default
+    {name="time", label = "display time(seconds)",type="int",default=1200,min=1,max=36000}, -- seconds, 10 by game default
     --{name="range",type="int",default=60,min=1,max=250},
     --{name="rate",type="int",default=60,min=1,max=250},
 }
@@ -22,11 +21,7 @@ end
 
 local scanManager=sdk.get_managed_singleton("app.ScanManager")
 sdk.hook(sdk.find_type_definition("app.ScanManager"):get_method("requestScan"), function ()
-    if not config.enable then
-        return
-    end
     Log("onScan")
-    Log(scanManager:get_userdata().Basic.ScanDisplayTime)
     scanManager:get_userdata().Basic.ScanDisplayTime = config.time
 end
 , nil)
