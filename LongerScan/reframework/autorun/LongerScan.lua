@@ -5,6 +5,7 @@ local version = "v1.0"
 local configfile = modname..".json"
 local _config={
     {name="time", label = "display time(seconds)",type="int",default=1200,min=1,max=36000}, -- seconds, 10 by game default
+    {name="itemrange", label = "item scan range",type="int",default=180,min=1,max=36000}, -- 80 by game default
     --{name="range",type="int",default=60,min=1,max=250},
     --{name="rate",type="int",default=60,min=1,max=250},
 }
@@ -21,8 +22,8 @@ end
 
 local scanManager=sdk.get_managed_singleton("app.ScanManager")
 sdk.hook(sdk.find_type_definition("app.ScanManager"):get_method("requestScan"), function ()
-    Log("onScan")
     scanManager:get_userdata().Basic.ScanDisplayTime = config.time
+    scanManager:get_userdata().Basic.ScanItemValidRange = config.itemrange
 end
 , nil)
 
